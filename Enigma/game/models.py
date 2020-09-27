@@ -64,6 +64,7 @@ class Quest(models.Model):
     class Meta:
         ordering = ['id']
 
+
 class Victim(models.Model):
     id = models.IntegerField(primary_key=True, default=None)
     first_name = models.CharField(max_length=30, default=None)
@@ -112,7 +113,7 @@ class Suspect(models.Model):
     height = models.IntegerField(default=None)
     hair_color = models.CharField(max_length=15, default=None)
     eye_color = models.CharField(max_length=15, default=None)
-    phone_number = models.IntegerField(default=None)
+    phone_number = models.CharField(max_length=30, default=None)
     email = models.CharField(max_length=50, default=None)
     profession = models.CharField(max_length=30, default=None)
     resident = models.CharField(max_length=30, default=None)
@@ -134,7 +135,7 @@ class Car(models.Model):
     car_make = models.CharField(max_length=30, default=None)
     car_model = models.CharField(max_length=30, default=None)
     car_model_year = models.IntegerField(default=None)
-    car_VIN = models.IntegerField(default=None)
+    car_VIN = models.CharField(max_length=50, default=None)
     car_owner = models.ForeignKey(Suspect, default=None, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -232,20 +233,21 @@ class Record(models.Model):
         ordering = ['id']
 
 
+'''needs to be handle made according to the quest and the guilty'''
+
+
 class Crime_details(models.Model):
     id = models.IntegerField(primary_key=True, default=None)
     crime_quest = models.ForeignKey(Quest, default=None, on_delete=models.CASCADE)
     victim_id = models.ForeignKey(Victim, default=None, on_delete=models.CASCADE)
     estimated_date = models.IntegerField(default=None)
     nature = models.CharField(max_length=30, default=None)
-    # weapon_used = models.CharField(max_length=30, default=None)
-    autopsia = models.CharField(max_length=100, default=None)
     location = models.CharField(max_length=100, default=None)
 
     # optional_clues = models.CharField(max_length=100, default=None)
 
     def __str__(self):
-        return self.id + self.crime_quest + self.victim_id + self.estimated_date + self.nature + self.autopsia + self.location
+        return self.id + self.crime_quest + self.victim_id + self.estimated_date + self.nature + self.location
 
     class Meta:
         ordering = ['id']
@@ -263,6 +265,8 @@ class Crime_details(models.Model):
 
 '''the game will interact with this table thanks to corruption
 needs to be handle made'''
+
+
 class Clues(models.Model):
     id = models.IntegerField(primary_key=True, default=None)
     clue = models.CharField(max_length=200, default=None)
